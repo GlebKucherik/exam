@@ -34,7 +34,7 @@ namespace ThePracticeExam.Program
                 {
                     for (int i = 0; i < _Autos.Length - 1; i++)
                     {
-                        // Sorting by Power
+                        
                         if (_Autos[i].Price > _Autos[i + 1].Price)
                         {
                             var buf = _Autos[i];
@@ -42,7 +42,7 @@ namespace ThePracticeExam.Program
                             _Autos[i + 1] = buf;
                         }
 
-                        // Sorting by Price
+                        
                         else if (_Autos[i].Model == _Autos[i + 1].Model)
                         {
                             if (_Autos[i].Price > _Autos[i + 1].Price)
@@ -55,3 +55,80 @@ namespace ThePracticeExam.Program
                     }
                 }
             }
+
+            public string Print()
+            {
+                string result = String.Empty;
+                foreach (var a in _Autos)
+                {
+                    result = $"{result}{a}";
+                }
+                return result;
+            }
+
+            public string Save()
+            {
+                string path = $"{Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent}/Autos.txt";
+                string Autos = this.Print();
+
+                File.WriteAllText(path, Autos);
+
+                return $"The file has been saved in {path}";
+            }
+        }
+        public class Auto
+        {
+
+            public string marka { get; set; }
+            public string Model { get; set; }
+
+            public int Price { get; set; }
+
+            public override string ToString()
+            {
+                return $"{Model} {Price} {marka}\n";
+            }
+        }
+        static void Main(string[] args)
+        {
+            Console.Write("Введите длину массива: ");
+            try
+            {
+                int length = int.Parse(Console.ReadLine());
+                Driver Driver = new Driver(length);
+
+                for (int i = 0; i < length; i++)
+                {
+                    Console.WriteLine($"\nМашина {i + 1}:");
+                    var Auto = new Auto();
+
+                    Console.Write("Напишите марку машины: ");
+                    Auto.marka = (Console.ReadLine());
+
+                    Console.Write("Напишите модель машины: ");
+                    Auto.Model = Console.ReadLine();
+
+
+                    Console.Write("Напишите цену: ");
+                    Auto.Price = int.Parse(Console.ReadLine());
+
+                    Driver[i] = Auto;
+                }
+
+                Console.WriteLine("\nПеред сортировкой:");
+                Console.WriteLine(Driver.Print());
+
+                Driver.Sort();
+
+                Console.WriteLine("\nПосле сортировки:");
+                Console.WriteLine(Driver.Print());
+
+                Console.WriteLine(Driver.Save());
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+        }
+    }
+}
