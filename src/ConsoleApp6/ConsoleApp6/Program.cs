@@ -28,4 +28,30 @@ namespace ThePracticeExam.Program
                 set => _Autos[i] = value;
             }
 
-         
+            public void Sort()
+            {
+                for (int y = 0; y < _Autos.Length - 1; y++)
+                {
+                    for (int i = 0; i < _Autos.Length - 1; i++)
+                    {
+                        // Sorting by Power
+                        if (_Autos[i].Price > _Autos[i + 1].Price)
+                        {
+                            var buf = _Autos[i];
+                            _Autos[i] = _Autos[i + 1];
+                            _Autos[i + 1] = buf;
+                        }
+
+                        // Sorting by Price
+                        else if (_Autos[i].Model == _Autos[i + 1].Model)
+                        {
+                            if (_Autos[i].Price > _Autos[i + 1].Price)
+                            {
+                                var buf = _Autos[i];
+                                _Autos[i] = _Autos[i + 1];
+                                _Autos[i + 1] = buf;
+                            }
+                        }
+                    }
+                }
+            }
